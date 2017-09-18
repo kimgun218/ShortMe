@@ -1,53 +1,44 @@
 package com.kimgun.shortme;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 public class ShortMeController {
 
     private static final int RANDOM_LENGTH = 8;
 
-    private List<ShortUrlObject> shortUrlObjectList = new ArrayList<ShortUrlObject>();
+    @Autowired
+    private ShortUrlJDBCTemplate template;
 
     @RequestMapping(value = "/shortme", method = RequestMethod.POST)
-    public ShortUrlObject generateShortUrl(@RequestHeader(value = "url") String rawUrl) {
-        ShortUrlObject shortUrlObject = getShortUrlObjectFromRawUrl(rawUrl);
+    public ShortUrlObject generateShortUrl(@RequestHeader(value = "url") String rawUrl) throws UnsupportedEncodingException {
+        ShortUrlObject shortUrlObject = template.getShortUrlObjectFromRawUrl(rawUrl);
         if (null == shortUrlObject) {
             shortUrlObject = new ShortUrlObject();
             shortUrlObject.setShortUrl(random());
             shortUrlObject.setRawUrl(rawUrl);
             shortUrlObject.setHitCounter(0);
-            shortUrlObjectList.add(shortUrlObject);
+            template.create(shortUrlObject);
             return shortUrlObject;
         } else {
             return shortUrlObject;
         }
     }
 
-    private ShortUrlObject getShortUrlObjectFromRawUrl(String rawUrl) {
-        for (ShortUrlObject object : shortUrlObjectList) {
-            if (rawUrl.equals(object.getRawUrl())) {
-                return object;
-            }
-        }
-        return null;
-    }
-
     @RequestMapping(value = "/shortme/{shortUrl}", method = RequestMethod.GET)
-    public String getRawUrl(@PathVariable(value = "shortUrl") String shortUrl) {
-        for (ShortUrlObject object : shortUrlObjectList) {
-            if (shortUrl.equals(object.getShortUrl())) {
-                object.setHitCounter(object.getHitCounter()+1);
-                return object.getRawUrl();
-            }
+    public String getRawUrl(@PathVariable(value = "shortUrl") String shortUrl) throws UnsupportedEncodingException {
+        ShortUrlObject shortUrlObject = template.getShortUrlObjectFromShortUrl(shortUrl);
+        if (null == shortUrlObject) {
+            return "NOT FOUND";
+        } else {
+            template.update(shortUrlObject.getId(), shortUrlObject.getHitCounter()+1);
+            return shortUrlObject.getRawUrl();
         }
-        return "NOT FOUND";
     }
-
 
     private String random() {
         return RandomStringUtils.randomAlphanumeric(RANDOM_LENGTH);

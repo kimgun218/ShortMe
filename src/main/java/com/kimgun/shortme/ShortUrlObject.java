@@ -1,5 +1,8 @@
 package com.kimgun.shortme;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class ShortUrlObject {
     private int id;
     private String shortUrl;
@@ -20,6 +23,10 @@ public class ShortUrlObject {
 
     public void setShortUrl(String shortUrl) {
         this.shortUrl = shortUrl;
+    }
+
+    public Object getEncodedRawUrl() throws UnsupportedEncodingException {
+        return URLEncoder.encode(rawUrl, "UTF-8");
     }
 
     public String getRawUrl() {
