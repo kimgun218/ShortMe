@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 
 @RestController
-public class ShortMeController {
+public class ShortUrlController {
 
     private static final int RANDOM_LENGTH = 8;
 

@@ -1,6 +1,7 @@
 package com.kimgun.shortme;
 
 import com.kimgun.shortme.shorturl.ShortUrlJDBCTemplate;
+import com.kimgun.shortme.user.UserJDBCTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,6 +24,13 @@ public class ShortMeMain {
         ShortUrlJDBCTemplate shortUrlJDBCTemplate = new ShortUrlJDBCTemplate();
         shortUrlJDBCTemplate.setDataSource(dataSource());
         return shortUrlJDBCTemplate;
+    }
+
+    @Bean
+    public UserJDBCTemplate userJDBCTemplate() {
+        UserJDBCTemplate userJDBCTemplate = new UserJDBCTemplate();
+        userJDBCTemplate.setDataSource(dataSource());
+        return userJDBCTemplate;
     }
 
     public static void main(String[] args) {
