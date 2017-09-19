@@ -1,4 +1,4 @@
-package com.kimgun.shortme;
+package com.kimgun.shortme.shorturl;
 
 import javax.sql.DataSource;
 import java.io.UnsupportedEncodingException;

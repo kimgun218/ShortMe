@@ -1,5 +1,6 @@
 package com.kimgun.shortme;
 
+import com.kimgun.shortme.shorturl.ShortUrlJDBCTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;

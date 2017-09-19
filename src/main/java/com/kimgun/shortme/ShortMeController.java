@@ -1,5 +1,7 @@
 package com.kimgun.shortme;
 
+import com.kimgun.shortme.shorturl.ShortUrlJDBCTemplate;
+import com.kimgun.shortme.shorturl.ShortUrlObject;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

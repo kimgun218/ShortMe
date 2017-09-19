@@ -1,4 +1,4 @@
-package com.kimgun.shortme;
+package com.kimgun.shortme.shorturl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

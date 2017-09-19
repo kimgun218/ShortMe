@@ -1,4 +1,4 @@
-package com.kimgun.shortme;
+package com.kimgun.shortme.shorturl;
 
 import org.springframework.jdbc.core.RowMapper;
 
