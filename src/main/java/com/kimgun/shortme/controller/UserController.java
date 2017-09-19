@@ -50,21 +50,17 @@ public class UserController {
     @RequestMapping(value = "/session", method = RequestMethod.DELETE)
     public String logout(@RequestHeader(value = "sessionId") String sessionId) throws UnsupportedEncodingException {
         UserObject userObject = template.getUserObjectFromSessionId(sessionId);
-        if (null == userObject) {
-            return "Session Id " + sessionId + " not found.";
-        } else {
-            template.removeSessionId(userObject.getId());
-            return "Logout completed.";
-        }
+        template.removeSessionId(userObject.getId());
+        return "Logout completed.";
     }
 
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     public String loginStatus(@RequestHeader(value = "sessionId") String sessionId) throws UnsupportedEncodingException {
-        UserObject userObject = template.getUserObjectFromSessionId(sessionId);
-        if (null == userObject) {
-            return "Session Id " + sessionId + " not found.";
-        } else {
+        try {
+            UserObject userObject = template.getUserObjectFromSessionId(sessionId);
             return "The Session Id is active.";
+        } catch (RuntimeException e) {
+            return "Session Id " + sessionId + " not found.";
         }
     }
 

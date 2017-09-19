@@ -1,6 +1,5 @@
 package com.kimgun.shortme.controller;
 
-import com.kimgun.shortme.UnauthorizedException;
 import com.kimgun.shortme.shorturl.ShortUrlJDBCTemplate;
 import com.kimgun.shortme.shorturl.ShortUrlObject;
 import com.kimgun.shortme.user.UserJDBCTemplate;
@@ -23,14 +22,10 @@ public class ShortUrlController {
     @Autowired
     private ShortUrlJDBCTemplate template;
 
-    @RequestMapping(value = "/shortme", method = RequestMethod.POST)
+    @RequestMapping(value = "/shortme", method = RequestMethod.PUT)
     public ShortUrlObject generateShortUrl(@RequestHeader(value = "sessionId") String sessionId,
                                            @RequestHeader(value = "url") String rawUrl) throws UnsupportedEncodingException {
         UserObject userObject = userTemplate.getUserObjectFromSessionId(sessionId);
-        if (null == userObject) {
-            throw new UnauthorizedException();
-        }
-
         ShortUrlObject shortUrlObject = template.getShortUrlObjectFromRawUrl(rawUrl, userObject.getId());
         if (null == shortUrlObject) {
             shortUrlObject = new ShortUrlObject();
@@ -56,9 +51,10 @@ public class ShortUrlController {
         }
     }
 
-    @RequestMapping(value = "/shortme", method = RequestMethod.GET)
-    public List<ShortUrlObject> findShortUrlObjects(@RequestHeader(value = "owner") Integer owner) throws UnsupportedEncodingException {
-        return template.listShortUrlObjects(owner);
+    @RequestMapping(value = "/shortme", method = RequestMethod.POST)
+    public List<ShortUrlObject> findShortUrlObjects(@RequestHeader(value = "sessionId") String sessionId) throws UnsupportedEncodingException {
+        UserObject userObject = userTemplate.getUserObjectFromSessionId(sessionId);
+        return template.listShortUrlObjects(userObject.getId());
     }
 
     private String random() {

@@ -1,5 +1,6 @@
 package com.kimgun.shortme.user;
 
+import com.kimgun.shortme.UnauthorizedException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -56,7 +57,7 @@ public class UserJDBCTemplate implements UserDAO {
             return jdbcTemplateObject.queryForObject(SQL,
                     new Object[]{sessionId}, new UserObjectMapper());
         } catch (Exception e) {
-            return null;
+            throw new UnauthorizedException();
         }
     }
 
