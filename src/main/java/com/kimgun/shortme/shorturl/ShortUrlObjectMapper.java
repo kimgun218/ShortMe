@@ -15,6 +15,7 @@ public class ShortUrlObjectMapper implements RowMapper<ShortUrlObject> {
         shortUrlObject.setShortUrl(resultSet.getString("short_url"));
         shortUrlObject.setRawUrl(getDecodedUrl(resultSet.getString("raw_url")));
         shortUrlObject.setHitCounter(resultSet.getInt("hit_counter"));
+        shortUrlObject.setOwner(resultSet.getInt("owner"));
         return shortUrlObject;
     }
 

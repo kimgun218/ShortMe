@@ -1,4 +1,4 @@
-package com.kimgun.shortme;
+package com.kimgun.shortme.controller;
 
 import com.kimgun.shortme.user.UserJDBCTemplate;
 import com.kimgun.shortme.user.UserObject;

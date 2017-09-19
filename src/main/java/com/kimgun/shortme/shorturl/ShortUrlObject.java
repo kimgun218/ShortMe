@@ -8,6 +8,7 @@ public class ShortUrlObject {
     private String shortUrl;
     private String rawUrl;
     private int hitCounter;
+    private int owner;
 
     public int getId() {
         return id;
@@ -43,5 +44,13 @@ public class ShortUrlObject {
 
     public void setHitCounter(int hitCounter) {
         this.hitCounter = hitCounter;
+    }
+
+    public int getOwner() {
+        return owner;
+    }
+
+    public void setOwner(int owner) {
+        this.owner = owner;
     }
 }

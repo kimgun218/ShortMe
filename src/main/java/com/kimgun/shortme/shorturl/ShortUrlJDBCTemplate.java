@@ -20,30 +20,36 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
 
     @Override
     public void create(ShortUrlObject shortUrlObject) throws UnsupportedEncodingException {
-        String SQL = "INSERT INTO ShortUrl (short_url, raw_url, hit_counter) VALUES (?, ?, ?)";
-        jdbcTemplateObject.update( SQL,
+        String SQL = "INSERT INTO ShortUrl (short_url, raw_url, hit_counter, owner) VALUES (?, ?, ?, ?)";
+        jdbcTemplateObject.update(SQL,
                 shortUrlObject.getShortUrl(),
                 shortUrlObject.getEncodedRawUrl(),
-                shortUrlObject.getHitCounter());
+                shortUrlObject.getHitCounter(),
+                shortUrlObject.getOwner());
         System.out.println("Created Record RawUrl : " + shortUrlObject.getRawUrl());
         return;
-    }
-
-    public ShortUrlObject getShortUrlObjectFromId(Integer id) {
-        return getShortUrlObject("id", id);
     }
 
     public ShortUrlObject getShortUrlObjectFromShortUrl(String shortUrl) {
         return getShortUrlObject("short_url", shortUrl);
     }
 
-    public ShortUrlObject getShortUrlObjectFromRawUrl(String rawUrl) throws UnsupportedEncodingException {
-        return getShortUrlObject("raw_url", URLEncoder.encode(rawUrl, "UTF-8"));
+    public ShortUrlObject getShortUrlObjectFromRawUrl(String rawUrl, Integer owner) throws UnsupportedEncodingException {
+        String encodedRawUrl = URLEncoder.encode(rawUrl, "UTF-8");
+        try {
+            String SQL = "SELECT * FROM ShortUrl WHERE raw_url = ? AND owner = ?";
+            ShortUrlObject shortUrlObjects = jdbcTemplateObject.queryForObject(SQL,
+                    new Object[]{encodedRawUrl, owner}, new ShortUrlObjectMapper());
+            return shortUrlObjects;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
+    @Override
     public ShortUrlObject getShortUrlObject(String key, Object value) {
         try {
-            String SQL = "SELECT * FROM ShortUrl where " + key + " = ?";
+            String SQL = "SELECT * FROM ShortUrl WHERE " + key + " = ?";
             return jdbcTemplateObject.queryForObject(SQL,
                     new Object[]{value}, new ShortUrlObjectMapper());
         } catch (Exception e) {
@@ -52,10 +58,11 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
     }
 
     @Override
-    public List<ShortUrlObject> listShortUrlObjects() {
+    public List<ShortUrlObject> listShortUrlObjects(Integer owner) {
         try {
-            String SQL = "SELECT * FROM ShortUrl";
-            List <ShortUrlObject> shortUrlObjects = jdbcTemplateObject.query(SQL, new ShortUrlObjectMapper());
+            String SQL = "SELECT * FROM ShortUrl WHERE owner = ?";
+            List<ShortUrlObject> shortUrlObjects = jdbcTemplateObject.query(SQL,
+                    new Object[]{owner}, new ShortUrlObjectMapper());
             return shortUrlObjects;
         } catch (Exception e) {
             return null;
@@ -66,7 +73,7 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
     public void delete(Integer id) {
         String SQL = "DELETE FROM ShortUrl where id = ?";
         jdbcTemplateObject.update(SQL, id);
-        System.out.println("Deleted Record with ID = " + id );
+        System.out.println("Deleted Record with ID = " + id);
         return;
     }
 
@@ -74,7 +81,7 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
     public void update(Integer id, Integer hitCounter) {
         String SQL = "UPDATE ShortUrl SET hit_counter = ? where id = ?";
         jdbcTemplateObject.update(SQL, hitCounter, id);
-        System.out.println("Updated Record with ID = " + id );
+        System.out.println("Updated Record with ID = " + id);
         return;
     }
 }

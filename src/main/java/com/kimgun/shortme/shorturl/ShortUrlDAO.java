@@ -30,8 +30,9 @@ public interface ShortUrlDAO {
     /**
      * This is the method to be used to list down
      * all the records from the com.kimgun.shortme.ShortUrl table.
+     * @param owner
      */
-    public List<ShortUrlObject> listShortUrlObjects();
+    public List<ShortUrlObject> listShortUrlObjects(Integer owner);
 
     /**
      * This is the method to be used to delete
