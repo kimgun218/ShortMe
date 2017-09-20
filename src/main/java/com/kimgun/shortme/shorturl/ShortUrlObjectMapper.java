@@ -7,7 +7,11 @@ import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class is used to map the result of the query with ShortUrlObject.
+ */
 public class ShortUrlObjectMapper implements RowMapper<ShortUrlObject> {
+
     @Override
     public ShortUrlObject mapRow(ResultSet resultSet, int i) throws SQLException {
         ShortUrlObject shortUrlObject = new ShortUrlObject();

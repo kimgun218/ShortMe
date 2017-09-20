@@ -25,7 +25,6 @@ public class UserJDBCTemplate implements UserDAO {
                 userObject.getUsername(),
                 userObject.getEncodedPassword());
         System.out.println("Created Record Username : " + userObject.getUsername());
-        return;
     }
 
     @Override
@@ -65,8 +64,7 @@ public class UserJDBCTemplate implements UserDAO {
     public List<UserObject> listUserObjects() {
         try {
             String SQL = "SELECT * FROM User";
-            List <UserObject> userObjects = jdbcTemplateObject.query(SQL, new UserObjectMapper());
-            return userObjects;
+            return jdbcTemplateObject.query(SQL, new UserObjectMapper());
         } catch (Exception e) {
             return null;
         }
@@ -77,7 +75,6 @@ public class UserJDBCTemplate implements UserDAO {
         String SQL = "DELETE FROM ShortUrl where id = ?";
         jdbcTemplateObject.update(SQL, id);
         System.out.println("Deleted Record with ID = " + id );
-        return;
     }
 
     @Override
@@ -85,7 +82,6 @@ public class UserJDBCTemplate implements UserDAO {
         String SQL = "UPDATE User SET sessionId = \"\" where id = ?";
         jdbcTemplateObject.update(SQL, id);
         System.out.println("Updated Record with ID = " + id );
-        return;
     }
 
     @Override
@@ -93,6 +89,5 @@ public class UserJDBCTemplate implements UserDAO {
         String SQL = "UPDATE User SET sessionId = ? where id = ?";
         jdbcTemplateObject.update(SQL, sessionId, id);
         System.out.println("Updated Record with ID = " + id );
-        return;
     }
 }

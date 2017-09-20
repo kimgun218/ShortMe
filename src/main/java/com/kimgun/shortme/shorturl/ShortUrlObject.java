@@ -3,6 +3,17 @@ package com.kimgun.shortme.shorturl;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+/**
+ * This class is a bean of the short URL.
+ * It contains the properties as follows.
+ *  - id is the ID number of the short URL in the table.
+ *  - shortUrl is the generated short URL.
+ *  - rawUrl is the full URL.
+ *  - hitCounter is the number of hitting the short URL.
+ *  - owner is the userId in the com.kimgun.shortme.User table.
+ *
+ *  The table of this bean is com.kimgun.shortme.ShortUrl table.
+ */
 public class ShortUrlObject {
     private int id;
     private String shortUrl;

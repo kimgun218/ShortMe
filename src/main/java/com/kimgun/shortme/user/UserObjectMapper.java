@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class is used to map the result of the query with UserObject.
+ */
 public class UserObjectMapper implements RowMapper<UserObject> {
     @Override
     public UserObject mapRow(ResultSet resultSet, int i) throws SQLException {

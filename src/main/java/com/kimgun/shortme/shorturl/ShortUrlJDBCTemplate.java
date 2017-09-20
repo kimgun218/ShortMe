@@ -7,6 +7,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+/**
+ * This class includes the methods that connect with com.kimgun.shortme.ShortUrl table
+ */
 public class ShortUrlJDBCTemplate implements ShortUrlDAO {
 
     private DataSource dataSource;
@@ -27,7 +30,6 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
                 shortUrlObject.getHitCounter(),
                 shortUrlObject.getOwner());
         System.out.println("Created Record RawUrl : " + shortUrlObject.getRawUrl());
-        return;
     }
 
     public ShortUrlObject getShortUrlObjectFromShortUrl(String shortUrl) {
@@ -38,9 +40,8 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
         String encodedRawUrl = URLEncoder.encode(rawUrl, "UTF-8");
         try {
             String SQL = "SELECT * FROM ShortUrl WHERE raw_url = ? AND owner = ?";
-            ShortUrlObject shortUrlObjects = jdbcTemplateObject.queryForObject(SQL,
+            return jdbcTemplateObject.queryForObject(SQL,
                     new Object[]{encodedRawUrl, owner}, new ShortUrlObjectMapper());
-            return shortUrlObjects;
         } catch (Exception e) {
             return null;
         }
@@ -61,9 +62,8 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
     public List<ShortUrlObject> listShortUrlObjects(Integer owner) {
         try {
             String SQL = "SELECT * FROM ShortUrl WHERE owner = ?";
-            List<ShortUrlObject> shortUrlObjects = jdbcTemplateObject.query(SQL,
+            return jdbcTemplateObject.query(SQL,
                     new Object[]{owner}, new ShortUrlObjectMapper());
-            return shortUrlObjects;
         } catch (Exception e) {
             return null;
         }
@@ -74,7 +74,6 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
         String SQL = "DELETE FROM ShortUrl where id = ?";
         jdbcTemplateObject.update(SQL, id);
         System.out.println("Deleted Record with ID = " + id);
-        return;
     }
 
     @Override
@@ -82,6 +81,5 @@ public class ShortUrlJDBCTemplate implements ShortUrlDAO {
         String SQL = "UPDATE ShortUrl SET hit_counter = ? where id = ?";
         jdbcTemplateObject.update(SQL, hitCounter, id);
         System.out.println("Updated Record with ID = " + id);
-        return;
     }
 }

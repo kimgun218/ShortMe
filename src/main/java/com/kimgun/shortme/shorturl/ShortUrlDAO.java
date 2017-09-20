@@ -22,15 +22,15 @@ public interface ShortUrlDAO {
      * This is the method to be used to list down
      * a record from the com.kimgun.shortme.ShortUrl table corresponding
      * to a passed ShortUrlObject id.
-     * @param value
-     *
+     * @param key is column in the table.
+     * @param value is the value in the column.
      */
     public ShortUrlObject getShortUrlObject(String key, Object value);
 
     /**
      * This is the method to be used to list down
      * all the records from the com.kimgun.shortme.ShortUrl table.
-     * @param owner
+     * @param owner is user Id from the com.kimgun.shortme.User table.
      */
     public List<ShortUrlObject> listShortUrlObjects(Integer owner);
 
