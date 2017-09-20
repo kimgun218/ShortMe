@@ -1,0 +1,139 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ShortMe",
+		"_postman_id": "db9ad3f3-7341-7896-3f27-9a8e41f21372",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate short url",
+			"request": {
+				"url": "localhost:8080/shortme",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "sessionId",
+						"value": "DvNDhhncFZV8Ic5bTMIpVYSXajeU7T5e8w7LuZK5GdFR55tKE8",
+						"description": ""
+					},
+					{
+						"key": "url",
+						"value": "http://www.facebook.com",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Full url from short url",
+			"request": {
+				"url": "localhost:8080/shortme/iefr880P",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Owner's short urls",
+			"request": {
+				"url": "localhost:8080/shortme",
+				"method": "POST",
+				"header": [
+					{
+						"key": "sessionId",
+						"value": "JwSdRgAQoEG6Vn4IebRMzvEWCN1sinuR8y6J5qeI5i30aK95y2",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Setup new user",
+			"request": {
+				"url": "localhost:8080/user",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "username",
+						"value": "johney",
+						"description": ""
+					},
+					{
+						"key": "password",
+						"value": "password",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Check login status",
+			"request": {
+				"url": "localhost:8080/session",
+				"method": "GET",
+				"header": [
+					{
+						"key": "sessionId",
+						"value": "809FF3FDQh6yx2qvvJNyrDHCAyKudlJiLjoY1Vx4Ag6tMw8zEn",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"url": "localhost:8080/session",
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"value": "johney",
+						"description": ""
+					},
+					{
+						"key": "password",
+						"value": "walker",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"url": "localhost:8080/session",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "sessionId",
+						"value": "xxxxxxxxxx",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
