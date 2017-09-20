@@ -1,6 +1,6 @@
 package com.kimgun.shortme.user;
 
-import com.kimgun.shortme.UnauthorizedException;
+import com.kimgun.shortme.exception.UnauthorizedException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
